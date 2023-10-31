@@ -6,7 +6,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Unique,
-  ManyToOne
+  ManyToOne,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm'
 
 import { UserEntity } from './user.entity'
@@ -20,7 +22,7 @@ export class WalletEntity {
   @Column({nullable: false})
   name?: string
 
-  @Column({nullable: false})
+  @Column({nullable: true})
   walletID?: string
 
   @Column({ name: 'address', type: 'text'})
@@ -29,8 +31,9 @@ export class WalletEntity {
   @Column({default: true})
   status?: boolean 
 
-  @ManyToOne(() => UserEntity, (user) => user.wallets)
-  user?: UserEntity
+  @OneToOne(() => UserEntity, (user) => user.id)
+  @JoinColumn()
+  user: UserEntity
 
   @Column({nullable: false})
   currencyFlag?: string
@@ -38,8 +41,10 @@ export class WalletEntity {
   @Column({nullable: false})
   currency?: string
   
-  @Column({nullable: false})
-  balance?: string
+  // @Column({nullable: false})
+  // balance?: any
+  @Column({ type: 'numeric', default: 0 }) // Use the appropriate type for your balance
+  balance: number;
 
   @Column({default: {}, type: 'json'})
   bank?: object
@@ -48,5 +53,5 @@ export class WalletEntity {
   createdAt?: Date
 
   @UpdateDateColumn()
-  updatedAt?: Date
+  updatedAt?: Date 
 }

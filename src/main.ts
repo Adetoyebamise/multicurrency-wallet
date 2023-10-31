@@ -1,26 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { PostgresClient } from './database/postgres'
+import { PostgresClient } from './database/postgres';
 import AppConfigFactory from './config/AppConfigFactory';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const appConfigFactory = new AppConfigFactory()
-  const appConfig = appConfigFactory.FromEnvVar()
+  const appConfigFactory = new AppConfigFactory();
+  const appConfig = appConfigFactory.FromEnvVar();
 
-  const postgresClient = await PostgresClient({
-    host: appConfig.sql.host,
-    dbname: appConfig.sql.dbname,
-    user: appConfig.sql.user,
-    password: appConfig.sql.password,
-    port: appConfig.sql.port,
-    entities: appConfig.typeorm.entities
-})
+  // const postgresClient = await PostgresClient({
+  //   host: "localhost",
+  //   dbname: "postgres",
+  //   user: "postgres",
+  //   password: "wallet",
+  //   port: 5432,
+  //   entities: [],
+  // }); 
 
-console.log('info', `Postgres connection Successful`);
+  console.log('info', `Postgres connection Successful`);
 
-  await app.listen(3000);
-
+  await app.listen(appConfig.port, () => {
+    console.log('info', `Multi currency listening on port ${appConfig.port}`);
+  });
 }
 bootstrap();

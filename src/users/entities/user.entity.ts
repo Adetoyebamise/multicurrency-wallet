@@ -22,16 +22,13 @@ export class UserEntity {
     firstName?: string
 
     @Column({nullable: true})
-    middleName?: string
-
-    @Column({nullable: true})
-    lastName?: string
-
-    @Column({nullable: true})
     phone?: string
 
     @Column({nullable: true})
     dateOfBirth?: string
+
+    @Column({nullable: true})
+    email?: string
 
     @Column({nullable: false})
     password?: string
