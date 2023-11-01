@@ -13,11 +13,11 @@ export class UsersController {
   config: IAppConfig;
   constructor(private readonly UsersService: UsersService) {} 
   
-  @Post()
-  create(@Body() createUserDto: CreateUserDto, @Req() req:Request, @Res() res:Response) { 
+  @Post('create-user')
+  async create(@Body() createUserDto: CreateUserDto, @Req() req:Request, @Res() res:Response) { 
 
-    const userData = this.UsersService.createUser(createUserDto);
-
+    const userData = await this.UsersService.createUser(createUserDto);
+    console.log("userData", userData)
     return res.status(201).json({
       status: "success",
       message: "User created successfully",
@@ -37,7 +37,7 @@ export class UsersController {
     return res.status(201).json({
       status: "success",
       message: "User Signed in successfully",
-      data: { token: token,  user}
+      data: { token,  user}
     })
   }
 

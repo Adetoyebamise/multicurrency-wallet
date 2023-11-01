@@ -39,11 +39,9 @@ export class WalletEntity {
   currencyFlag?: string
 
   @Column({nullable: false})
-  currency?: string
-  
-  // @Column({nullable: false})
-  // balance?: any
-  @Column({ type: 'numeric', default: 0 }) // Use the appropriate type for your balance
+  currency?: string 
+
+  @Column({ type: 'numeric', default: 0 }) 
   balance: number;
 
   @Column({default: {}, type: 'json'})

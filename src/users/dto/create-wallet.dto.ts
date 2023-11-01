@@ -26,7 +26,7 @@ export class createWalletDto {
   @IsString()
   currencyFlag: string; 
 
-  balance: string;
+  balance: number;
 
   bank: string;
 }
